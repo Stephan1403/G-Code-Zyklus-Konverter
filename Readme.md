@@ -1,6 +1,5 @@
 # G-Code Zyklus Konverter
 
-
 ## Ordner Struktur
 
 ```python
@@ -19,6 +18,6 @@ G-Code-Zyklus-Converter
 
 ```
 
-
-
 FileReader liest den Input, findet er einen Cycle
+
+GCdo

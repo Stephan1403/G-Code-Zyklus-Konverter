@@ -1,2 +1,3 @@
 class GCode:
-    pass
+    def __init__(self) -> None:
+        self.steps = []
