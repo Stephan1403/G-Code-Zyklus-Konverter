@@ -8,8 +8,8 @@ from cycle_types.GCode import GCode
 
 
 class GCodeReader:
-    def __init__(self) -> None:
-        pass
+    def __init__(self, gcode_path: str) -> None:
+        self.gcode_path = gcode_path
 
     def get_next_code(self) -> Cycle | GCode | None:
         pass
