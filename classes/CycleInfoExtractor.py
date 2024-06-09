@@ -1,12 +1,14 @@
 from typing import List, Dict
 from cycle_types.CycleInfo import CycleInfo
+from ai.AiClient import AiClient
 
 import pymupdf
 
 
 class CycleInfoExtractor:
     def __init__(self, pdf_path: str) -> None:
-        self.aiClient = None
+        # TODO: create aiClient here or pass instance ???
+        self.aiClient: AiClient = None
         self.doc = pymupdf.open(pdf_path)
 
     def extract_cycle_info(self, cycleNum: int) -> CycleInfo:
@@ -48,13 +50,16 @@ class CycleInfoExtractor:
 
     def _get_cycle_steps_from_api(self, blocks: List[str]) -> List[str]:
         """Returns the cycle steps from the API"""
-        dict_out: Dict = self.api.query(
+        dict_out: Dict = self.aiClient.query(
             data=str(blocks), prompt_name="get_cycle_steps"
         )  # TODO: update api prompt here
         return dict_out["steps"]
 
+    def _get_cycle_description_from_api(self, blocks: List[str]) -> List[str]:
+        pass
+
     def _get_cycle_params_from_api(self, blocks: List[str]) -> Dict[str, str]:
         """Returns the cycle params from the API"""
-        dict_out = self.api.query(data=blocks, prompt_name="get_cycle_params")
-        return dict_out
+        # TODO: extract prompt here and send to ai
+        dict_out = self.aiClient.query(data=str(blocks), prompt_name="get_cycle_params")
         return dict_out
