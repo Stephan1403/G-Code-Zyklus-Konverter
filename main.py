@@ -3,9 +3,9 @@ from classes.CycleSchemeManager import CycleSchemeManager
 from classes.CycleTransformer import CycleTransformer
 from classes.CycleInfoExtractor import CycleInfoExtractor
 
-from cycle_types.Cycle import Cycle
-from cycle_types.GCode import GCode
-from cycle_types.CycleCall import CycleCall
+# from cycle_types.Cycle import Cycle
+# from cycle_types.GCode import GCode
+# from cycle_types.CycleCall import CycleCall
 
 if __name__ == "__main__":
     reader = GCodeReader()
