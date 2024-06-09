@@ -1,4 +1,5 @@
-from ..types.CycleInfo import CycleInfo
+from cycle_types.CycleInfo import CycleInfo
+
 
 class CycleInfoExtractor:
     pass
@@ -8,6 +9,6 @@ class CycleInfoExtractor:
         pass
 
     # Extracts cycle info from Pdf Documentation
-    
+
     def extract_cycle_info(self, cycleNum: int) -> CycleInfo:
         pass
