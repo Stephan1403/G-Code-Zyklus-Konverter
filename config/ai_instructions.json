@@ -1,0 +1,30 @@
+{
+  "general_instructions": [],
+  "prompts": {
+    "get_cycle_steps_old": [
+      "Gib mir eine String list im Json format zurück mit jedem Zyklusablauf schritt.",
+      "Gebe nur die tatsächlichen Zyklusabläufe aus.",
+      "Die Schritte starten immer mit einer Zahl.",
+      "Jeder Schritt soll in einem String sein. Also im eine Zahl plus Beschreibung pro Listenelement.",
+      "Gebe nur das json aus und nichts anderes.",
+      "Entnehme die Informatinen aus folgenden Texten:"
+    ],
+    "get_cycle_steps": [
+      "Gib mir im json format mit dem key \"description\" die Zyklusablaufbeschreibung zurück. ",
+      "Diese kommt als erstes unter Zyklusablauf ",
+      "Unter dem key \"steps\" sollen die tatsächlichen Zyklusabläufe in einer liste zurückgegeben werden. ",
+      "Jeder Schritt beginnt immer mit einer Zahl und soll ein einziges Listenelement beziehungsweise String sein. ",
+      "Gebe nur das json aus und nicht anderes. ",
+      "Entnehme die Informationen aus folgenden Text Blöcken:"
+    ],
+
+    "get_cycle_params": [
+      "Gib mir eine String list im Json format zurück mit jedem Zyklusparameter und der Beschreibung.",
+      "Alle wichtigen Zyklusparameter sind unter Zyklusparameter, verwende nicht die Parameter die nicht unter Zyklusparameter gelistet sind",
+      "Die Parameter beginnen immer mit Q und dann einer Zahl, danach folgt der Name und dann die Beschreibung",
+      "Ein List element ist immer Q-Parameter Name Beschreibung",
+      "Gebe nur das json aus und nichts anderes.",
+      "Entnehme die Informatinen aus folgenden Text Blöcken:"
+    ]
+  }
+}
