@@ -1,6 +1,17 @@
 {
   "general_instructions": [],
   "prompts": {
+    "generate_scheme": [
+      "Ich will einen Haidenhain Zyklus in Gcode umwandeln. ",
+      "Gib mir eine json Liste von GCode Operationen zurück. ",
+      "Eine GCode Operation ist ein json Objekt hat einen key \"code\" und einen key \"args\". ",
+      "Unter code steht als string der GCode. Zum Beispiel G0 oder G1. ",
+      "In args stehen die Argumente die der code benötigt. Diese Argumenete sind String elemente und werden mit den Q Parametern angegeben.",
+      "Für komplexere Zusammenhänge kann im String Python Syntax verwendet werden. Zum Beispiel: \"Q251 or 0\"",
+      "Gebe nur das jason aus und nichts anderes. ",
+      "Entnehme die Informatinen aus folgender Zyklus Definition:"
+    ],
+
     "get_cycle_steps_old": [
       "Gib mir eine String list im Json format zurück mit jedem Zyklusablauf schritt.",
       "Gebe nur die tatsächlichen Zyklusabläufe aus.",
