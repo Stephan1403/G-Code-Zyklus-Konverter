@@ -20,11 +20,12 @@ if __name__ == "__main__":
     # schemeManager = CycleSchemeManager()
     # transformer = CycleTransformer()
 
-    # aiClient = AiClient(os.getenv("API_KEY"))
     aiClient = getAiClient(ClientType.GEMINI, api_key=os.getenv("API_KEY"))
     cycleInfoExtractor = CycleInfoExtractor("./data/cycles.pdf", aiClient)
 
-    # cycleInfoExtractor.extract_cycle_info(430)
+    cycle430 = cycleInfoExtractor.extract_cycle_info(430)
+    print(cycle430.steps)
+    print("\n\n AND: \n", cycle430.params)
 
     """
     ui = UI()

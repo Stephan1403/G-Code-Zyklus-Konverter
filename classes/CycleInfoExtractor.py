@@ -2,6 +2,7 @@ from typing import List, Dict
 from cycle_types.CycleInfo import CycleInfo
 from ai.AiClient import AiClient
 
+import json
 import pymupdf
 
 
@@ -50,9 +51,8 @@ class CycleInfoExtractor:
 
     def _get_cycle_steps_from_api(self, blocks: List[str]) -> List[str]:
         """Returns the cycle steps from the API"""
-        dict_out: Dict = self.aiClient.query(
-            data=str(blocks), prompt_name="get_cycle_steps"
-        )  # TODO: update api prompt here
+        prompt = self._generate_prompt("get_cycle_steps", data=blocks)
+        dict_out: Dict = self.aiClient.dict_query(prompt=prompt)
         return dict_out["steps"]
 
     def _get_cycle_description_from_api(self, blocks: List[str]) -> List[str]:
@@ -60,7 +60,23 @@ class CycleInfoExtractor:
 
     def _get_cycle_params_from_api(self, blocks: List[str]) -> Dict[str, str]:
         """Returns the cycle params from the API"""
-        # TODO: extract prompt here and send to ai
-        dict_out = self.aiClient.query(
-            data=str(blocks), prompt_name="get_cycle_params")
+        prompt = self._generate_prompt("get_cycle_params", data=blocks)
+        dict_out = self.aiClient.dict_query(prompt=prompt)
         return dict_out
+
+    def _generate_prompt(self, instruction_name: str, data) -> str:
+        def get_ai_instructions(instruction_name: str) -> str:
+            with open("config/ai_instructions.json") as f:
+                json_file = json.load(f)
+                try:
+                    prompt_str = ""
+                    prompt_list = json_file["prompts"][instruction_name]
+                    for prompt in prompt_list:
+                        prompt_str += prompt + "\n"
+                    return prompt_str
+                except KeyError:
+                    raise KeyError(f"No prompt with name {instruction_name}")
+
+        instruction = get_ai_instructions(instruction_name)
+        data = str(data)
+        return f"{instruction}: \n {data}"
