@@ -3,8 +3,6 @@ from cycle_types.GCode import GCode
 
 
 class CycleTransformer:
-    def __init__(self) -> None:
-        pass
-
-    def transform_call_to_gcode(self, call: CycleCall) -> GCode:
+    @classmethod
+    def transform_call_to_gcode(cls, call: CycleCall) -> GCode:
         pass
