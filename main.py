@@ -24,6 +24,7 @@ if __name__ == "__main__":
     schemeManager = CycleSchemeManager(aiClient, "./data/cycles.pdf")
 
     cycle430 = schemeManager.get_scheme(430)
+    print(cycle430)
 
     """
     cycle430 = cycleInfoExtractor.extract_cycle_info(430)

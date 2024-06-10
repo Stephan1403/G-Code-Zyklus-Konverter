@@ -37,7 +37,10 @@ class CycleSchemeManager:
         prompt = PromptGenerator.generate_with_instructions_and_data(
             "generate_scheme", cycleInfo
         )
+
+        print("Retrieving cycle generated scheme ... ")
         dict_out = self.aiClient.dict_query(prompt=prompt)
+        print("Received generated scheme.")
         return dict_out  # type: ignore
 
         # TODO: store dict in CycleScheme

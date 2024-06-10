@@ -56,7 +56,9 @@ class CycleInfoExtractor:
         prompt = PromptGenerator.generate_with_instructions_and_data(
             "get_cycle_steps", data=blocks
         )
+        print("Requesting cycle steps from ai ...")
         dict_out: Dict = self.aiClient.dict_query(prompt=prompt)
+        print("Retrieved cycle steps")
         return dict_out["steps"]
 
     def _get_cycle_description_from_api(self, blocks: List[str]) -> List[str]:
@@ -67,5 +69,8 @@ class CycleInfoExtractor:
         prompt = PromptGenerator.generate_with_instructions_and_data(
             "get_cycle_params", data=blocks
         )
+
+        print("Requesting cycle params from ai ...")
         dict_out = self.aiClient.dict_query(prompt=prompt)
+        print("Retrieved cycle params")
         return dict_out
