@@ -1,6 +1,9 @@
 class Cycle:
     def __init__(self) -> None:
-        self.number = 0
-        self.name = ""
-        self.params = []
-    
+        self.number: int = 0
+        self.name: str = ""
+        self.x: float | None = None
+        self.y: float | None = None
+        self.z: float | None = None
+        self.speed: float | None = None
+        self.params: dict = {}

@@ -25,6 +25,15 @@ if __name__ == "__main__":
 
     cycle430 = schemeManager.get_scheme(430)
     print(cycle430)
+    
+    # cycle430 = cycleInfoExtractor.extract_cycle_info(430)
+    # print(cycle430.steps)
+    # print("\n\n AND: \n", cycle430.params)
+
+    # ui = UI()
+    # g_code_path = ui.show_gcode_input()
+    # if g_code_path is None:
+    #     exit(0)
 
     """
     cycle430 = cycleInfoExtractor.extract_cycle_info(430)
