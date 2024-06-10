@@ -42,7 +42,7 @@ if __name__ == "__main__":
 		if code.isinstance(Cycle):
 			if not schemeManager.does_scheme_exist(code.number):
 				cycleInfo = cycleInfoExtractor.extract_cycle_info(code.number)
-				schemeManager.add_scheme(cycleInfo)
+				schemeManager.add_scheme(cycleInfo) 
 			last_cycle_num = code.number
 
 		elif code.isinstance(CycleCall):
