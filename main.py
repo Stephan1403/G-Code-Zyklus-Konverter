@@ -6,7 +6,7 @@ from classes.CycleSchemeManager import CycleSchemeManager
 from classes.CycleTransformer import CycleTransformer
 from classes.CycleInfoExtractor import CycleInfoExtractor
 
-from ai.AiClient import AiClient, ClientType, getAiClient
+from ai.AiClient import ClientType, getAiClient
 
 # from classes.UI import UI
 
@@ -25,8 +25,8 @@ if __name__ == "__main__":
 
     cycle430 = schemeManager.get_scheme(430)
     print(cycle430)
-    
-    # cycle430 = cycleInfoExtractor.extract_cycle_info(430)
+
+    # cycle430 = cycleInfoExtractor.extract_cycle_info(430)ycle430 = cycleInfoExtractor.extract_cycle_info(430)
     # print(cycle430.steps)
     # print("\n\n AND: \n", cycle430.params)
 
