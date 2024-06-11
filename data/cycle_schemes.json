@@ -1,0 +1,35 @@
+{
+  "z204": [
+    { "code": "M19", "args": ["R0"] },
+    { "code": "G0", "args": ["X{X+Q251}"] },
+    { "code": "G1", "args": ["Z{-Q200}", "F{Q253 or FMAX or FAUTO}"] },
+    { "code": "G0", "args": ["X{X}"] },
+    { "code": "M8" },
+    { "code": "G1", "args": ["Z{Q249}"] },
+    { "code": "G4", "args": ["X{Q255 or 0}"] },
+    { "code": "G0", "args": ["Z{-Q200}"] },
+    { "code": "M19", "args": ["R0"] },
+    { "code": "G0", "args": ["X{X+Q251}"] },
+    { "code": "G1", "args": ["Z{Q203+Q200}", "F{Q253 or FMAX or FAUTO}"] },
+    {
+      "code": "G0",
+      "args": ["Z{Q203+Q204 if FMAX else Q203+Q200}", "F{FMAX if FMAX else 0}"]
+    },
+    { "code": "G0", "args": ["X{X}"] }
+  ],
+  "z200": [
+    { "code": "G4", "args": ["Q210"] },
+    {
+      "code": "loop",
+      "cond": "Q201 > Q202 * i",
+      "body": [
+        { "code": "G1", "args": ["Z{Q203-Q202*i}"] },
+        { "code": "G0", "args": ["Z{Q203+Q200}"] },
+        { "code": "G4", "args": ["{Q202}"] },
+        { "code": "G0", "args": ["Z{(Q203-Q202*i)+Q200}"] }
+      ]
+    },
+    { "code": "G1", "args": ["{Q203-Q201}"] },
+    { "code": "G0", "args": ["{Q203+Q204 if Q204 else Q203+Q200}"] }
+  ]
+}
