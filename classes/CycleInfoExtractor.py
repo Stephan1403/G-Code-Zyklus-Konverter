@@ -4,13 +4,11 @@ from cycle_types.CycleInfo import CycleInfo
 from ai.AiClient import AiClient
 from classes.PromptGenerator import PromptGenerator
 
-import json
 import pymupdf
 
 
 class CycleInfoExtractor:
     def __init__(self, pdf_path: str, aiClient: AiClient) -> None:
-        # TODO: create aiClient here or pass instance ???
         self.aiClient: AiClient = aiClient
         self.doc = pymupdf.open(pdf_path)
 

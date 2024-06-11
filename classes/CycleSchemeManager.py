@@ -14,7 +14,9 @@ class CycleSchemeManager:
         self.cycleInfoExtractor = CycleInfoExtractor(pdf_path, aiClient)
 
     def get_scheme(self, cycleNum: int) -> CycleScheme:
-        """Returns a scheme from the storage. If none exists it generates a new one using the the given ai and given documentation
+        """Returns a scheme from the storage.
+        If none exists it generates a new one
+        using the the given ai and given documentation
 
         Args:
             :param ``cycleNum``: The number of the requested cycle
