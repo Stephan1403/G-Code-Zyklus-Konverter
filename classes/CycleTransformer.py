@@ -1,7 +1,7 @@
-from cycle_types.GCode import GCode
+from cycle_types.Cycle import Cycle
+from cycle_types.CycleScheme import CycleScheme
 
 
 class CycleTransformer:
-    @classmethod
-    def transform_call_to_gcode(cls) -> GCode:
+    def scheme_to_gcode(self, cycle: Cycle, scheme: CycleScheme) -> list[str]:
         pass

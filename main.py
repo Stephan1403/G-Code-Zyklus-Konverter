@@ -4,64 +4,43 @@ from dotenv import load_dotenv
 from classes.GCodeReader import GCodeReader
 from classes.CycleSchemeManager import CycleSchemeManager
 from classes.CycleTransformer import CycleTransformer
-from classes.CycleInfoExtractor import CycleInfoExtractor
 
 from ai.AiClient import ClientType, getAiClient
+from cycle_types.Cycle import Cycle
+from cycle_types.GCode import GCode
 
-# from classes.UI import UI
+manager = CycleSchemeManager(getAiClient(ClientType.GEMINI, api_key=os.getenv), "./data/cycles.pdf")
+transformer = CycleTransformer()
 
-# from cycle_types.Cycle import Cycle
-# from cycle_types.GCode import GCode
-# from cycle_types.CycleCall import CycleCall
+def main():
+    finished_gcode = GCode()
+    gcode_path = "./test_gcode.txt"
+    execution_loop(gcode_path, finished_gcode)
+    save_gcode(finished_gcode)
+
+def transform(cycle: Cycle) -> str | list[str]:
+    scheme = manager.get_scheme(cycle.number)
+    return transformer.scheme_to_gcode(cycle, scheme)
+
+def add_to_finished_gcode(lines: str | list[str], finished_gcode: GCode):
+    if isinstance(lines, list):
+        for line in lines:
+            finished_gcode.add_step(line)
+    finished_gcode.add_step(lines)
+
+def save_gcode(finished_gcode: GCode):
+    with open("./output.gcode", "w", encoding="utf-8") as f:
+        f.write(finished_gcode.get_gcode())
+
+def execution_loop(gcode_path: str, finished_gcode: GCode):
+    reader = GCodeReader(gcode_path)
+    while cycle := reader.get_next_code():
+        if isinstance(cycle, Cycle):
+            add_to_finished_gcode(transform(cycle), finished_gcode)
+        else:
+            add_to_finished_gcode(cycle, finished_gcode)
+    print("Transformation Finished")
 
 if __name__ == "__main__":
     load_dotenv()
-    # reader = GCodeReader()
-    # schemeManager = CycleSchemeManager()
-    # transformer = CycleTransformer()
-
-    aiClient = getAiClient(ClientType.GEMINI, api_key=os.getenv("API_KEY"))
-    schemeManager = CycleSchemeManager(aiClient, "./data/cycles.pdf")
-
-    cycle430 = schemeManager.get_scheme(430)
-    print(cycle430)
-
-    # cycle430 = cycleInfoExtractor.extract_cycle_info(430)ycle430 = cycleInfoExtractor.extract_cycle_info(430)
-    # print(cycle430.steps)
-    # print("\n\n AND: \n", cycle430.params)
-
-    # ui = UI()
-    # g_code_path = ui.show_gcode_input()
-    # if g_code_path is None:
-    #     exit(0)
-
-    """
-    cycle430 = cycleInfoExtractor.extract_cycle_info(430)
-    print(cycle430.steps)
-    print("\n\n AND: \n", cycle430.params)
-
-    ui = UI()
-    g_code_path = ui.show_gcode_input()
-    if g_code_path is None:
-        exit(0)
-    """
-
-    """
-	last_cycle_num = None
-
-
-	while code:=reader.get_next_code():
-		if code.isinstance(Cycle):
-			if not schemeManager.does_scheme_exist(code.number):
-				cycleInfo = cycleInfoExtractor.extract_cycle_info(code.number)
-				schemeManager.add_scheme(cycleInfo) 
-			last_cycle_num = code.number
-
-		elif code.isinstance(CycleCall):
-			scheme = schemeManager.get_cycle_scheme(last_cycle_num)
-			gcode: GCode = transformer.transform_call_to_gcode(code, scheme)
-			# TODO: Store in file
-		else:
-			# TODO: Store in file
-			print(f"Code: {code}")
-	"""
+    main()

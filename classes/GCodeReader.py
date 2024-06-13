@@ -1,14 +1,7 @@
-# Handles file input
-# Finds cycles
-# from .types.Cycle import Cycle
-# from .types.GCode import GCode
-
 import copy
 from typing import Literal
 from Errors.GCodeError import GCodeException
 from cycle_types.Cycle import Cycle
-from cycle_types.GCode import GCode
-
 
 class GCodeReader:
     converted_lines: list[str | Cycle] = []
@@ -39,7 +32,7 @@ class GCodeReader:
                 self.__cycle_call_handler(line)
             else: self.__normal_gcode_handler(line)
 
-    def get_next_code(self) -> Cycle | GCode | None:
+    def get_next_code(self) -> Cycle | str | None:
         self.reader_index += 1
         if self.reader_index >= len(self.converted_lines):
             return None
