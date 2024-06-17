@@ -31,6 +31,7 @@ def add_to_finished_gcode(lines: str | list[str], finished_gcode: GCode):
     if isinstance(lines, list):
         for line in lines:
             finished_gcode.add_step(line)
+        return
     finished_gcode.add_step(lines)
 
 
