@@ -9,8 +9,11 @@ from ai.AiClient import ClientType, getAiClient
 from cycle_types.Cycle import Cycle
 from cycle_types.GCode import GCode
 
-manager = CycleSchemeManager(getAiClient(ClientType.GEMINI, api_key=os.getenv), "./data/cycles.pdf")
+manager = CycleSchemeManager(
+    getAiClient(ClientType.GEMINI, api_key=os.getenv), "./data/cycles.pdf"
+)
 transformer = CycleTransformer()
+
 
 def main():
     finished_gcode = GCode()
@@ -18,9 +21,11 @@ def main():
     execution_loop(gcode_path, finished_gcode)
     save_gcode(finished_gcode)
 
+
 def transform(cycle: Cycle) -> str | list[str]:
     scheme = manager.get_scheme(cycle.number)
     return transformer.scheme_to_gcode(cycle, scheme)
+
 
 def add_to_finished_gcode(lines: str | list[str], finished_gcode: GCode):
     if isinstance(lines, list):
@@ -28,9 +33,11 @@ def add_to_finished_gcode(lines: str | list[str], finished_gcode: GCode):
             finished_gcode.add_step(line)
     finished_gcode.add_step(lines)
 
+
 def save_gcode(finished_gcode: GCode):
     with open("./output.gcode", "w", encoding="utf-8") as f:
         f.write(finished_gcode.get_gcode())
+
 
 def execution_loop(gcode_path: str, finished_gcode: GCode):
     reader = GCodeReader(gcode_path)
@@ -40,6 +47,7 @@ def execution_loop(gcode_path: str, finished_gcode: GCode):
         else:
             add_to_finished_gcode(cycle, finished_gcode)
     print("Transformation Finished")
+
 
 if __name__ == "__main__":
     load_dotenv()
