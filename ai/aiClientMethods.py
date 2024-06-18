@@ -5,8 +5,6 @@ from ai.GeminiClient import GeminiClient
 from enum import Enum
 
 
-
-
 class ClientType(Enum):
     GEMINI = "GEMINI"
     VERTEX = "VERTEX"

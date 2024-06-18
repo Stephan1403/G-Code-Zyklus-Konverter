@@ -50,10 +50,7 @@ def execution_loop(gcode_path: str, finished_gcode: GCode):
 
 
 if __name__ == "__main__":
-
-    content = (
-        "Return json only. I want the key to be test. And the value Hello World"
-    )
+    content = "Return json only. I want the key to be test. And the value Hello World"
 
     res = ai_client.dict_query(content)
     print(res)
