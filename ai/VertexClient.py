@@ -9,6 +9,8 @@ import os
 from dotenv import load_dotenv
 load_dotenv()
 
+'''
+Implementation of the VertexClient class is not yet complete.'''
 
 class VertexClient(AiClient):
     def __init__(self, project_id=os.getenv("PROJECT_ID"), location=os.getenv("REGION"), model="none"):
@@ -16,12 +18,7 @@ class VertexClient(AiClient):
         self.location = location
         
         vertexai.init(project=project_id, location=location)
-        #self.model = TextGenerationModel.from_pretrained("google/text-bison@001")
         self.model = GenerativeModel("gemini-pro")
-        #self.model = GenerativeModel("gemini-1.5-flash-001")
-        
-
-        
 
     def dict_query(self, prompt: str) -> Dict:
         res = self.model.generate_content(prompt)
