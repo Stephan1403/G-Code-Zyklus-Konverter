@@ -5,13 +5,12 @@ from classes.GCodeReader import GCodeReader
 from classes.CycleSchemeManager import CycleSchemeManager
 from classes.CycleTransformer import CycleTransformer
 
-from ai.AiClient import ClientType, getAiClient
+from ai.aiClientMethods import ClientType, getAiClient
 from cycle_types.Cycle import Cycle
 from cycle_types.GCode import GCode
 
-manager = CycleSchemeManager(
-    getAiClient(ClientType.GEMINI, api_key=os.getenv), "./data/cycles.pdf"
-)
+ai_client = getAiClient(ClientType.VERTEX)
+manager = CycleSchemeManager(ai_client, "./data/cycles.pdf")
 transformer = CycleTransformer()
 
 
@@ -51,5 +50,10 @@ def execution_loop(gcode_path: str, finished_gcode: GCode):
 
 
 if __name__ == "__main__":
-    load_dotenv()
-    main()
+
+    content = (
+        "Return json only. I want the key to be test. And the value Hello World"
+    )
+
+    res = ai_client.dict_query(content)
+    print(res)
