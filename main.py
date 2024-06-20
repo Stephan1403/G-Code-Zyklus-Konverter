@@ -7,7 +7,11 @@ from classes.CycleTransformer import CycleTransformer
 
 from ai.aiClientMethods import ClientType, getAiClient
 from cycle_types.Cycle import Cycle
+from cycle_types.CycleScheme import CycleScheme
 from cycle_types.GCode import GCode
+import json
+
+load_dotenv()
 
 ai_client = getAiClient(ClientType.VERTEX)
 manager = CycleSchemeManager(ai_client, "./data/cycles.pdf")
@@ -50,7 +54,5 @@ def execution_loop(gcode_path: str, finished_gcode: GCode):
 
 
 if __name__ == "__main__":
-    content = "Return json only. I want the key to be test. And the value Hello World"
-
-    res = ai_client.dict_query(content)
-    print(res)
+    load_dotenv()
+    main()
