@@ -23,12 +23,11 @@ class CycleInfoExtractor:
 
     def _get_cycle_pages(self, doc, cycleNum: int) -> List:
         """Returns a list of pages that contain the cycleNum"""
-
         def is_cycle_page(page, cycleNum) -> bool:
             if page.number < 55:  # ignore hardcoded table of contents
                 # TODO: check dynamically if page is cycle page (e.g. not table of contents)
                 return False
-            return page.search_for(f"Zyklus {cycleNum},")
+            return page.search_for(f"Zyklus {cycleNum}")
 
         # TODO: use only given pages as input
         pages = []

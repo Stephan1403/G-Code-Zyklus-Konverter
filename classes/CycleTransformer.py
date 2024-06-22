@@ -72,7 +72,10 @@ class CycleTransformer:
         i: int = 1
         params = copy.deepcopy(self.parameter)
         params["i"] = i
-        while eval(loop_condition, globals(), params): # pylint: disable=eval-used
+        while True:
+            first_eval_round = self._eval_code(loop_condition, params)
+            if not eval(first_eval_round, globals(), params): # pylint: disable=eval-used
+                break
             body = loop_dict.get("body", None)
             if not body:
                 raise ValueError("Body is required")
@@ -82,7 +85,7 @@ class CycleTransformer:
                 raise ValueError("Probably an infinite loop. Stopping.")
             params["i"] = i
 
-    def _eval_code(self, code: str, params: dict):
+    def _eval_code(self, code: str, params: dict) -> str:
         eval_expressions = self._extract_bracketed_words(code)
         if eval_expressions:
             for expression in eval_expressions:

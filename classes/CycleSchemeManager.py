@@ -33,6 +33,7 @@ class CycleSchemeManager:
         return None
 
     def _generate_scheme_from_ai(self, cycleNum: int) -> CycleScheme:
+        print(f"Generating scheme for cycle {cycleNum} ...")
         cycleInfo: CycleInfo = self.cycleInfoExtractor.extract_cycle_info(
             cycleNum)
 
@@ -41,9 +42,10 @@ class CycleSchemeManager:
         )
 
         print("Retrieving cycle generated scheme ... ")
-        dict_out = self.aiClient.dict_query(prompt=prompt)
+        scheme_code = self.aiClient.dict_query(prompt=prompt)
+        scheme = CycleScheme(scheme_code)
         print("Received generated scheme.")
-        return dict_out  # type: ignore
+        return scheme
 
         # TODO: store dict in CycleScheme
 
