@@ -72,7 +72,7 @@ class GCodeReader:
         cycle.y = float(self.__get_cycle_pos(line, "Y"))
         cycle.z = float(self.__get_cycle_pos(line, "Z"))
         if self.__get_cycle_pos(line, "F") is not None:
-            cycle.speed = "F" + self.__get_cycle_pos(line, "F")
+            cycle.speed = self.__get_cycle_pos(line, "F")
         self.converted_lines.append(cycle)
 
     def __normal_gcode_handler(self, line: str):

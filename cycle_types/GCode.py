@@ -5,5 +5,6 @@ class GCode:
     def get_gcode(self) -> str:
         value: str = ""
         for step in self.steps:
-            value += (step + "\n")
+            if step is not None:
+                value += (step + "\n")
         return value
