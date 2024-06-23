@@ -1,35 +1,34 @@
-from typing import List
+from Errors.PromptErrors import InstructionNotFoundError
+from typing import List, Dict
 import json
-
-
-class PromptGenerator2:
-    @classmethod
-    def generate_with_instructions_and_data(cls, instruction_name: str, data):
-        instructions = cls._get_ai_instructions_from_name(instruction_name)
-        data = str(data)
-        return f"{instructions}: \n {data}"
-
-    @classmethod
-    def _get_ai_instructions_from_name(cls, name: str):
-        with open("config/ai_instructions.json") as f:
-            json_file = json.load(f)
-            try:
-                prompt_str = ""
-                prompt_list = json_file["prompts"][name]
-                for prompt in prompt_list:
-                    prompt_str += prompt + "\n"
-                return prompt_str
-            except KeyError:
-                raise KeyError(f"No prompt with name {name}")
 
 
 class PromptPart:
     """One Part of the Prompt"""
 
-    def __init__(self, name: str, content_list: List, show_tag: bool = True) -> None:
+    # TODO: data should be checked for type pathlike and not string
+
+    def __init__(
+        self,
+        name: str,
+        data: List[str],
+        show_tag: bool = True,
+        from_file: bool = False,
+        path="config/ai_instructions.json",
+    ) -> None:
+        """Create a new PromptPart
+
+        Args:
+            :param ``name``: Name of the part
+            :param ``data``: Data in form of a list or the path in the json file to the data
+            :param ``show_tag``: Whether to show the tag or not
+            :param ``path``: Path to the json file with the instructions
+        """
         self.name = name
         self.show_tag = show_tag
-        self.content_list = content_list
+        self.data = data
+        self.from_file = from_file
+        self.path = path
         self.value: str = ""
 
     def get(self) -> str:
@@ -37,21 +36,42 @@ class PromptPart:
         return self.value
 
     def _generate(self) -> None:
-        self._add_content_from_list()
+        if self.from_file:
+            c_list = self._get_content_from_file(self.data)
+        else:
+            c_list = self.data
+        self._add_content_from_list(c_list)
         if self.show_tag:
             self._append_tag()
 
-    def _add_content_from_list(self) -> None:
+    def _add_content_from_list(self, content_list: List[str], show_tag=None) -> None:
+        if show_tag is None:
+            show_tag = self.show_tag
+
         content_text: str = ""
-        for el in self.content_list:
-            if self.show_tag:
+        for el in content_list:
+            if show_tag:
                 content_text += "  "
             content_text += el + "\n"
         # Set value and remove one \n at the end
         self.value += content_text.removesuffix("\n")
 
+    def _get_content_from_file(self, path: List[str]) -> List[str]:
+        """Retrieve data from the json file.
+
+        Args:
+            :param ``path``: is a list of keys to the destination in the json"""
+        with open(self.path) as f:
+            data = json.load(f)
+            for key in path:
+                try:
+                    data = data[key]
+                except KeyError:
+                    raise InstructionNotFoundError(key)
+            return data if data is not None else []
+
     def _append_tag(self):
-        open_tag = f"<{self.name.upper()}>\n"
+        open_tag = f"<{self.name.upper()}>B\nA"
         close_tag = f"\n</{self.name.upper()}>"
         self.value = open_tag + self.value + close_tag
 
@@ -85,28 +105,25 @@ class PromptGenerator:
 
     @classmethod
     def add_prompt_parts(cls, prompt: str, *prompt_parts: PromptPart) -> str:
-        if isinstance(prompt_parts, PromptPart):
-            return prompt + prompt_parts.get() + "\n\n"
-
         for p in prompt_parts:
             prompt = prompt + p.get() + "\n\n"
         return prompt
 
+    # Default prompts
     @classmethod
     def get_default_system_instruction(cls) -> PromptPart:
         return PromptPart(
-            "System instructions", ["Be something fun", "lol"], show_tag=False
+            "System instructions",
+            ["general_instructions"],
+            show_tag=False,
+            from_file=True,
         )
 
     @classmethod
     def get_default_return_format(cls) -> PromptPart:
-        return PromptPart("Return Format", ["Do json", "moin"])
-
-
-if __name__ == "__main__":
-    i = PromptPart("Instruction", ["This should not ", "have any tag", "lul"])
-    p = PromptPart("Example", ["First line", "Second line", "Third line"])
-
-    prom = PromptGenerator.generate(i, p)
-    prom2 = PromptGenerator.generate_default_for_translation(i, i, i, i)
-    print(prom2)
+        return PromptPart(
+            "System instructions",
+            ["prompts", "generate_scheme"],
+            show_tag=False,
+            from_file=True,
+        )

@@ -1,6 +1,3 @@
-import os
-from dotenv import load_dotenv
-
 from classes.GCodeReader import GCodeReader
 from classes.CycleSchemeManager import CycleSchemeManager
 from classes.CycleTransformer import CycleTransformer
@@ -9,7 +6,7 @@ from ai.aiClientMethods import ClientType, getAiClient
 from cycle_types.Cycle import Cycle
 from cycle_types.GCode import GCode
 
-ai_client = getAiClient(ClientType.VERTEX)
+ai_client = getAiClient(ClientType.GEMINI)
 manager = CycleSchemeManager(ai_client, "./data/cycles.pdf")
 transformer = CycleTransformer()
 
@@ -52,5 +49,17 @@ def execution_loop(gcode_path: str, finished_gcode: GCode):
 if __name__ == "__main__":
     content = "Return json only. I want the key to be test. And the value Hello World"
 
-    res = ai_client.dict_query(content)
-    print(res)
+    from classes.CycleInfoExtractor import CycleInfoExtractor
+
+    ci = CycleInfoExtractor("./data/cycles.pdf", ai_client)
+    a = ci.extract_cycle_info(430)
+    print(a)
+
+
+# res = ai_client.dict_query
+# res = ai_client.dict_query(content)
+# print(res)
+# print(res["test"])
+
+# from classes.PromptGenerator import PromptGenerator, c_steps_prompt
+# print(c_steps_prompt)
