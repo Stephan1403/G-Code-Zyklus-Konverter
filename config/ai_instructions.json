@@ -28,7 +28,9 @@
       "format": [
         "Gib mir im json format mit dem key \"description\" die Zyklusablaufbeschreibung zurück. ",
         "description soll ein String sein. ",
+        "Wenn es keine Beschreibung gibt, dann soll description ein leerer String sein. ",
         "Unter dem key \"steps\" sollen die tatsächlichen Zyklusabläufe in einer liste zurückgegeben werden. ",
+        "Die keys \"steps\" und \"description\" müssen vorhanden sein. ",
         "Gebe nur das json aus und nicht anderes. "
       ],
       "instructions": [
@@ -54,3 +56,4 @@
     }
   }
 }
+
