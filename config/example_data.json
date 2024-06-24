@@ -1,8 +1,41 @@
 {
   "examples": [
     {
-      "input": [],
-      "output": []
+      "input": [
+        "Zyklus Ablauf:",
+        "Die TNC positioniert das Werkzeug in der Spindelachse im Eilgang FMAX auf den Sicherheits-Abstand über der Werkstück- Oberfläche",
+        "-Das Werkzeug bohrt mit dem programmierten Vorschub F bis zur ersten Zustell-Tiefe",
+        "-Die TNC fährt das Werkzeug mit FMAX auf den Sicherheits- Abstand zurück, verweilt dort - falls eingegeben - und fährt anschließend wieder mit FMAX bis auf Sicherheits-Abstand über die erste Zustell-Tiefe",
+        "-Anschließend bohrt das Werkzeug mit eingegebenem Vorschub F um eine weitere Zustell-Tiefe",
+        "-Die TNC wiederholt diesen Ablauf (2 bis 4), bis die eingegebene Bohrtiefe erreicht ist",
+        "-Vom Bohrungsgrund fährt das Werkzeug mit FMAX auf Sicherheits-Abstand oder – falls eingegeben – auf den 2. Sicherheits-Abstand",
+        "            mit folgenden Zyklus Parametern:",
+        "Q200 Sicherheits-Abstand? (inkremental): Abstand Werkzeugspitze – Werkstück-Oberfläche; Wert positiv eingeben. Eingabebereich 0 bis 99999,9999",
+        "-Q201 Tiefe? (inkremental): Abstand Werkstück- Oberfläche – Bohrungsgrund. Eingabebereich -99999,9999 bis 99999,9999",
+        "-Q206 Vorschub Tiefenzustellung?: Verfahrgeschwindigkeit des Werkzeugs beim Bohren in mm/min. Eingabebereich 0 bis 99999,999 alternativ FAUTO, FU",
+        "-Q202 Zustell-Tiefe? (inkremental): Maß, um welches das Werkzeug jeweils zugestellt wird. Eingabebereich 0 bis 99999,9999 Die Tiefe muss kein Vielfaches der Zustell-Tiefe sein. Die TNC fährt in einem Arbeitsgang auf die Tiefe wenn: Zustell-Tiefe und Tiefe gleich sind die Zustell-Tiefe größer als die Tiefe ist",
+        "-Q210 Verweilzeit oben?: Zeit in Sekunden, die das Werkzeug auf dem Sicherheits-Abstand verweilt, nachdem es die TNC zum Entspanen aus der Bohrung herausgefahren hat. Eingabebereich 0 bis 3600,0000",
+        "-Q203 Koord. Werkstück-Oberfläche? (absolut): Koordinate Werkstück-Oberfläche. Eingabebereich -99999,9999 bis 99999,9999",
+        "-Q204 2. Sicherheits-Abstand? (inkremental): Koordinate Spindelachse, in der keine Kollision zwischen Werkzeug und Werkstück (Spannmittel) erfolgen kann. Eingabebereich 0 bis 99999,9999",
+        "-Q211 Verweilzeit unten?: Zeit in Sekunden, die das Werkzeug am Bohrungsgrund verweilt. Eingabebereich 0 bis 3600,0000",
+        "-q395 bezug auf durchmesser (0/1)?: auswahl, ob sich die eingegebene tiefe auf die werkzeugspitze oder auf den zylindrischen teil des werkzeugs bezieht. wenn die tnc die tiefe auf den zylindrischen teil des werkzeugs beziehen soll, müssen sie den spitzenwinkel des werkzeugs in der spalte t-angle der werkzeug-tabelle tool.t definieren. 0 = tiefe bezogen auf die werkzeugspitze 1 = tiefe bezogen auf den zylindrischen teil des werkzeugs"
+      ],
+      "output": [
+        "```json",
+        "[",
+        "{\"code\": \"G4\", \"args\": [\"{Q210}\"] },",
+        "{\"loop\": \"Q201 > Q202 * i\",",
+        "   \"body\": [",
+        "   {\"code\": \"G1\", \"args\": [\"Z{Q203-Q202*i}\"]},",
+        "   {\"code\": \"G0\", \"args\": [\"Z{Q203+Q200}\"]},",
+        "   {\"code\": \"G4\", \"args\": [\"{Q202}\"]},",
+        "   {\"code\": \"G0\", \"args\": [\"Z{(Q203-Q202*i)+Q200}\"]}",
+        "   ]",
+        "},",
+        "{\"code\": \"G1\", \"args\": [\"{Q203-Q201}\"]},",
+        "{\"code\": \"G0\", \"args\": [\"{Q203+Q204 if Q204 else Q203+Q200}\"]}",
+        "```"
+      ]
     },
     {
       "input": [],
