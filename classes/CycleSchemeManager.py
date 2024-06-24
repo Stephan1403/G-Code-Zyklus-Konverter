@@ -2,7 +2,7 @@ from typing import Dict
 from ai.AiClient import AiClient
 
 from classes.CycleInfoExtractor import CycleInfoExtractor
-from classes.PromptGenerator import PromptGenerator
+from classes.PromptGenerator import PromptGenerator, PromptPart
 
 from cycle_types.CycleInfo import CycleInfo
 from cycle_types.CycleScheme import CycleScheme
@@ -36,9 +36,10 @@ class CycleSchemeManager:
         cycleInfo: CycleInfo = self.cycleInfoExtractor.extract_cycle_info(
             cycleNum)
 
-        prompt = PromptGenerator.generate_with_instructions_and_data(
-            "generate_scheme", cycleInfo
-        )
+        c_prompt_info = PromptPart(
+            name="Zyklus Informationen", data=[str(cycleInfo)])
+
+        prompt = PromptGenerator.generate(scheme_instruction, c_prompt_info)
 
         print("Retrieving cycle generated scheme ... ")
         dict_out = self.aiClient.dict_query(prompt=prompt)
@@ -52,6 +53,9 @@ class CycleSchemeManager:
         # Adds scheme to storage
 
 
-
-
-
+scheme_instruction = PromptPart(
+    name="Instruktionen",
+    data=["prompts", "generate_scheme"],
+    show_tag=False,
+    from_file=True,
+)
