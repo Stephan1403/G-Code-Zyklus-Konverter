@@ -1,3 +1,4 @@
+import re
 from typing import List, Dict
 from cycle_types.CycleInfo import CycleInfo
 
@@ -27,12 +28,15 @@ class CycleInfoExtractor:
 
     def _get_cycle_pages(self, doc, cycleNum: int) -> List:
         """Returns a list of pages that contain the cycleNum"""
-
         def is_cycle_page(page, cycleNum) -> bool:
             if page.number < 55:  # ignore hardcoded table of contents
                 # TODO: check dynamically if page is cycle page (e.g. not table of contents)
                 return False
-            return page.search_for(f"Zyklus {cycleNum},")
+            t = page.get_text()
+            pattern = rf"Zyklus {cycleNum}\W+"
+            if re.search(pattern, t):
+                return True
+            return False
 
         # TODO: use only given pages as input
         pages = []

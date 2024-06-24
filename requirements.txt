@@ -2,3 +2,4 @@ tkinterdnd2
 google-generativeai
 pyenv
 pymupdf
+openai
