@@ -22,12 +22,14 @@ class CycleInfoExtractor:
 
         cycle_steps = self._get_cycle_steps_from_api(cycle_blocks)
         cycle_params = self._get_cycle_params_from_api(cycle_blocks)
-        cycle_description = self._get_cycle_description_from_api(cycle_blocks)
 
-        return CycleInfo(cycleNum, cycle_steps, cycle_params, cycle_description)
+        return CycleInfo(
+            cycleNum, cycle_steps["steps"], cycle_params, cycle_steps["description"]
+        )
 
     def _get_cycle_pages(self, doc, cycleNum: int) -> List:
         """Returns a list of pages that contain the cycleNum"""
+
         def is_cycle_page(page, cycleNum) -> bool:
             if page.number < 55:  # ignore hardcoded table of contents
                 # TODO: check dynamically if page is cycle page (e.g. not table of contents)
@@ -62,34 +64,23 @@ class CycleInfoExtractor:
         # Generate prompt
         block_data = PromptPart(name="Daten", data=blocks)
         prompt = PromptGenerator.generate(
-            c_steps_format, c_steps_instruction, block_data
+            c_steps_instruction, c_steps_format, block_data
         )
+        print("Prompt = ", prompt)
 
         print("Requesting cycle steps from ai ...")
         dict_out: Dict = self.aiClient.dict_query(prompt=prompt)
         print("Retrieved cycle steps")
         return dict_out["steps"]
 
-    def _get_cycle_description_from_api(self, blocks: List[str]) -> str:
-        """Returns the cycle description from the API"""
-        # Generate prompt
-        block_data = PromptPart(name="Daten", data=blocks)
-        prompt = PromptGenerator.generate(
-            c_steps_format, c_steps_instruction, block_data
-        )
-
-        print("Requesting cycle description from ai ...")
-        dict_out = self.aiClient.dict_query(prompt=prompt)
-        print("Retrieved cycle params")
-        return dict_out
-
     def _get_cycle_params_from_api(self, blocks: List[str]) -> Dict[str, str]:
         """Returns the cycle params from the API"""
         # Generate prompt
         block_data = PromptPart(name="Daten", data=blocks)
         prompt = PromptGenerator.generate(
-            c_steps_format, c_steps_instruction, block_data
+            c_params_instructions, c_params_format, block_data
         )
+        print("Prompt = ", prompt)
 
         print("Requesting cycle params from ai ...")
         dict_out = self.aiClient.dict_query(prompt=prompt)
@@ -108,21 +99,7 @@ c_steps_format = PromptPart(
 c_steps_instruction = PromptPart(
     name="Cycle steps instruction",
     data=["prompts", "get_cycle_steps", "instructions"],
-    show_tag=False,
-    from_file=True,
-)
-
-# Cycle description
-c_description_format = PromptPart(
-    name="Erwartete Rückgabe",
-    data=["prompts", "get_cycle_description", "format"],
-    show_tag=False,
-    from_file=True,
-)
-c_description_instruction = PromptPart(
-    name="Cycle steps instruction",
-    data=["prompts", "get_cycle_description", "instructions"],
-    show_tag=False,
+    show_tag=True,
     from_file=True,
 )
 
@@ -133,9 +110,9 @@ c_params_format = PromptPart(
     show_tag=False,
     from_file=True,
 )
-c_params_format = PromptPart(
+c_params_instructions = PromptPart(
     name="Erwartete Rückgabe",
     data=["prompts", "get_cycle_params", "instructions"],
-    show_tag=False,
+    show_tag=True,
     from_file=True,
 )
