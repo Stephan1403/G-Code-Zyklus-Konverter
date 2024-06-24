@@ -11,7 +11,7 @@ class PromptPart:
     def __init__(
         self,
         name: str,
-        data: List[str],
+        data: List[str | int],
         show_tag: bool = True,
         from_file: bool = False,
         path="config/ai_instructions.json",
