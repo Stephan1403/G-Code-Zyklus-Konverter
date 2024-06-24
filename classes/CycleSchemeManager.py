@@ -29,10 +29,11 @@ class CycleSchemeManager:
         return scheme
 
     def _get_scheme_from_storage(self, cycle_number: int) -> CycleScheme | None:
-        saved_data:dict = None
+        saved_data: dict = None
         with open("./data/cycle_schemes.json", "r", encoding="utf-8") as f:
             saved_data = json.load(f)
-        cycle_scheme: CycleScheme | None = saved_data.get(str(cycle_number), None)
+        cycle_scheme: CycleScheme | None = saved_data.get(
+            str(cycle_number), None)
         if cycle_scheme is not None:
             print("Use cycle scheme from storage.")
             return CycleScheme(cycle_scheme)
@@ -46,7 +47,7 @@ class CycleSchemeManager:
         c_prompt_info = PromptPart(
             name="Zyklus Informationen", data=[str(cycleInfo)])
         prompt = PromptGenerator.generate(scheme_instruction, c_prompt_info)
-        
+
         print("Retrieving cycle generated scheme ... ")
         scheme_code = self.aiClient.dict_query(prompt=prompt)
         scheme = CycleScheme(scheme_code)
@@ -54,7 +55,7 @@ class CycleSchemeManager:
         return scheme
 
     def _store_scheme(self, scheme: CycleScheme, cycle_number: int) -> None:
-        saved_data:dict = None
+        saved_data: dict = None
         with open("./data/cycle_schemes.json", "r", encoding="utf-8") as f:
             saved_data = json.load(f)
         saved_data[str(cycle_number)] = scheme.code
@@ -62,10 +63,13 @@ class CycleSchemeManager:
             f.write(json.dumps(saved_data, indent=2))
 
 
-
 scheme_instruction = PromptPart(
     name="Instruktionen",
     data=["prompts", "generate_scheme"],
     show_tag=False,
     from_file=True,
+)
+
+scheme_example = PromptPart(
+    name="Beispiel", path="config/example_data.json", data=[""], from_file=True
 )
