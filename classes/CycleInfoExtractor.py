@@ -23,8 +23,6 @@ class CycleInfoExtractor:
         cycle_steps = self._get_cycle_steps_from_api(cycle_blocks)
         cycle_params = self._get_cycle_params_from_api(cycle_blocks)
 
-        print("\n\n\n\n Cycle steps: \n", cycle_steps)
-
         return CycleInfo(
             cycleNum, cycle_steps["steps"], cycle_params, cycle_steps["description"]
         )
@@ -61,19 +59,18 @@ class CycleInfoExtractor:
                 cycle_blocks.append(block[4])
         return cycle_blocks
 
-    def _get_cycle_steps_from_api(self, blocks: List[str]) -> List[str]:
+    def _get_cycle_steps_from_api(self, blocks: List[str]) -> Dict:
         """Returns the cycle steps from the API"""
         # Generate prompt
         block_data = PromptPart(name="Daten", data=blocks)
         prompt = PromptGenerator.generate(
             c_steps_instruction, c_steps_format, block_data
         )
-        print("Prompt: ", prompt)
 
         print("Requesting cycle steps from ai ...")
         dict_out: Dict = self.aiClient.dict_query(prompt=prompt)
         print("Retrieved cycle steps")
-        return dict_out["steps"]
+        return dict_out
 
     def _get_cycle_params_from_api(self, blocks: List[str]) -> Dict[str, str]:
         """Returns the cycle params from the API"""
@@ -91,29 +88,29 @@ class CycleInfoExtractor:
 
 """ Prompt definitions """
 # Cycle steps
-c_steps_format = PromptPart(
-    name="Erwartete Rückgabe",
-    data=["prompts", "get_cycle_steps", "format"],
-    show_tag=False,
-    from_file=True,
-)
 c_steps_instruction = PromptPart(
     name="Cycle steps instruction",
     data=["prompts", "get_cycle_steps", "instructions"],
+    show_tag=False,
+    from_file=True,
+)
+c_steps_format = PromptPart(
+    name="Erwartete Rückgabe",
+    data=["prompts", "get_cycle_steps", "format"],
     show_tag=True,
     from_file=True,
 )
 
 # Cycle params
-c_params_format = PromptPart(
-    name="Erwartete Rückgabe",
-    data=["prompts", "get_cycle_params", "format"],
-    show_tag=False,
-    from_file=True,
-)
 c_params_instructions = PromptPart(
     name="Erwartete Rückgabe",
     data=["prompts", "get_cycle_params", "instructions"],
+    show_tag=False,
+    from_file=True,
+)
+c_params_format = PromptPart(
+    name="Erwartete Rückgabe",
+    data=["prompts", "get_cycle_params", "format"],
     show_tag=True,
     from_file=True,
 )
