@@ -22,6 +22,9 @@ class CycleSchemeManager:
         Args:
             :param ``cycleNum``: The number of the requested cycle
         """
+
+        print(scheme_example_output)
+
         if scheme := self._get_scheme_from_storage(cycle_number):
             return scheme
         scheme = self._generate_scheme_from_ai(cycle_number)
@@ -46,7 +49,12 @@ class CycleSchemeManager:
 
         c_prompt_info = PromptPart(
             name="Zyklus Informationen", data=[str(cycleInfo)])
-        prompt = PromptGenerator.generate(scheme_instruction, c_prompt_info)
+        prompt = PromptGenerator.generate(
+            scheme_instruction,
+            scheme_example_input,
+            scheme_example_output,
+            c_prompt_info,
+        )
 
         print("Retrieving cycle generated scheme ... ")
         scheme_code = self.aiClient.dict_query(prompt=prompt)
@@ -70,6 +78,16 @@ scheme_instruction = PromptPart(
     from_file=True,
 )
 
-scheme_example = PromptPart(
-    name="Beispiel", path="config/example_data.json", data=[""], from_file=True
+scheme_example_input = PromptPart(
+    name="Beispiel Input",
+    path="config/example_data.json",
+    data=["examples", 0, "input"],
+    from_file=True,
+)
+
+scheme_example_output = PromptPart(
+    name="Beispiel Output",
+    path="config/example_data.json",
+    data=["examples", 0, "output"],
+    from_file=True,
 )
