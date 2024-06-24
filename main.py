@@ -8,7 +8,6 @@ from cycle_types.CycleScheme import CycleScheme
 from cycle_types.GCode import GCode
 import json
 
-load_dotenv()
 
 ai_client = getAiClient(ClientType.GEMINI)
 manager = CycleSchemeManager(ai_client, "./data/cycles.pdf")
@@ -51,6 +50,4 @@ def execution_loop(gcode_path: str, finished_gcode: GCode):
 
 
 if __name__ == "__main__":
-    load_dotenv()
     main()
-
