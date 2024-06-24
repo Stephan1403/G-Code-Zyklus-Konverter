@@ -23,6 +23,8 @@ class CycleInfoExtractor:
         cycle_steps = self._get_cycle_steps_from_api(cycle_blocks)
         cycle_params = self._get_cycle_params_from_api(cycle_blocks)
 
+        print("\n\n\n\n Cycle steps: \n", cycle_steps)
+
         return CycleInfo(
             cycleNum, cycle_steps["steps"], cycle_params, cycle_steps["description"]
         )
@@ -66,7 +68,6 @@ class CycleInfoExtractor:
         prompt = PromptGenerator.generate(
             c_steps_instruction, c_steps_format, block_data
         )
-        print("Prompt = ", prompt)
 
         print("Requesting cycle steps from ai ...")
         dict_out: Dict = self.aiClient.dict_query(prompt=prompt)
@@ -80,7 +81,6 @@ class CycleInfoExtractor:
         prompt = PromptGenerator.generate(
             c_params_instructions, c_params_format, block_data
         )
-        print("Prompt = ", prompt)
 
         print("Requesting cycle params from ai ...")
         dict_out = self.aiClient.dict_query(prompt=prompt)
