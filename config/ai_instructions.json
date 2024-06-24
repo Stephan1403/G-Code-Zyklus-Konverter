@@ -24,38 +24,33 @@
       "{\r\n        \"type\": \"array\",\r\n        \"items\": [\r\n          {\r\n            \"type\": \"object\",\r\n            \"properties\": {\r\n              \"code\": {\r\n                \"type\": \"string\" // must be a Gcode command\r\n              },\r\n              \"args\": {\r\n                \"type\": \"array\",\r\n                \"items\": [\r\n                  {\r\n                    \"type\": \"string\"\r\n                  }\r\n                ]\r\n              }\r\n            },\r\n            \"required\": [\r\n              \"code\",\r\n              \"args\"\r\n            ]\r\n          },\r\n          {\r\n            \"type\": \"object\",\r\n            \"properties\": {\r\n              \"loop\": {\r\n                \"type\": \"string\" // value is a while-loop condition. use \"i\" as looping index. i starts at 1 and increments every round automaticly. Dont initialize \"i\", only use it. \"i\" can also be used in body. This must be a Python expression. Dont use curly braces for this condition as everythin in there gets evaluated as a single python expression.\r\n              },\r\n              \"body\": {\r\n                \"$ref\": \"#/items\"\r\n              }\r\n            },\r\n            \"required\": [\r\n              \"loop\",\r\n              \"body\"\r\n            ]\r\n          },\r\n          {\r\n            \"type\": \"object\",\r\n            \"properties\": {\r\n              \"if\": {\r\n                \"type\": \"string\" // value is if condition. this must be a Python expression. Dont use curly braces for for this condition.\r\n              },\r\n              \"body\": {\r\n                \"$ref\": \"#/items\"\r\n              }\r\n            },\r\n            \"required\": [\r\n              \"loop\",\r\n              \"body\"\r\n            ]\r\n          },\r\n        ]\r\n      }",
       "Entnehme die Zyklusdefinition aus folgenden Texten:"
     ],
-    "get_cycle_description": {
-      "format": [
-        "Die Zyklusbeschreibung soll im Json format zurück gegben werden. ",
-        "Allerdings nur als einzelner String"
-      ],
-      "instructions": [
-        "Gib mir die Zyklusbeschreibugn zurück.",
-        "Diese ist direkt unter dem Wort Zyklsuablauf bevor die Schritte anfangen. "
-      ]
-    },
     "get_cycle_steps": {
       "format": [
         "Gib mir im json format mit dem key \"description\" die Zyklusablaufbeschreibung zurück. ",
-        "Diese kommt als erstes unter Zyklusablauf ",
+        "description soll ein String sein. ",
         "Unter dem key \"steps\" sollen die tatsächlichen Zyklusabläufe in einer liste zurückgegeben werden. ",
-        "Jeder Schritt beginnt immer mit einer Zahl und soll ein einziges Listenelement beziehungsweise String sein. ",
-        "Gebe nur das json aus und nicht anderes. ",
-        "Entnehme die Informationen aus folgenden Text Blöcken:"
+        "Gebe nur das json aus und nicht anderes. "
       ],
-      "instructions": ["Mach wie es im format steht"]
+      "instructions": [
+        "Jeder Schritt beginnt immer mit einer Zahl und soll ein einziges Listenelement beziehungsweise String sein. ",
+        "Die Schritte sollen in der Reihenfolge zurückgegeben werden, wie sie im Zyklus vorkommen. ",
+        "Die Schritte sollen in der Liste \"steps\" zurückgegeben werden. ",
+        "Die Description soll die Beschreibung des Zyklusablaufs sein.",
+        "Die Description steht in der Regel vor den Schritten.",
+        "Entnehme die Informationen aus folgenden Text Blöcken:"
+      ]
     },
-
     "get_cycle_params": {
       "format": [
         "Gib mir eine String list im Json format zurück mit jedem Zyklusparameter und der Beschreibung.",
+        "Ein List element ist immer Q-Parameter Name Beschreibung. ",
+        "Gebe nur das json aus und nichts anderes.",
+      ],
+      "instructions": [
         "Alle wichtigen Zyklusparameter sind unter Zyklusparameter, verwende nicht die Parameter die nicht unter Zyklusparameter gelistet sind",
         "Die Parameter beginnen immer mit Q und dann einer Zahl, danach folgt der Name und dann die Beschreibung",
-        "Ein List element ist immer Q-Parameter Name Beschreibung",
-        "Gebe nur das json aus und nichts anderes.",
         "Entnehme die Informatinen aus folgenden Text Blöcken:"
-      ],
-      "instructions": ["Mach wie es im format steht"]
+      ]
     }
   }
 }
