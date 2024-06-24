@@ -25,5 +25,4 @@ class OpenaiClient(AiClient):
         )
         response = output.choices[0].message.content
         dict_res = super().get_dict_from_str_response(response)
-        print(dict_res)
         return dict_res
