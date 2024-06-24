@@ -23,8 +23,6 @@ class CycleSchemeManager:
             :param ``cycleNum``: The number of the requested cycle
         """
 
-        print(scheme_example_output)
-
         if scheme := self._get_scheme_from_storage(cycle_number):
             return scheme
         scheme = self._generate_scheme_from_ai(cycle_number)
