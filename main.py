@@ -1,6 +1,3 @@
-import os
-from dotenv import load_dotenv
-
 from classes.GCodeReader import GCodeReader
 from classes.CycleSchemeManager import CycleSchemeManager
 from classes.CycleTransformer import CycleTransformer
@@ -13,7 +10,7 @@ import json
 
 load_dotenv()
 
-ai_client = getAiClient(ClientType.VERTEX)
+ai_client = getAiClient(ClientType.GEMINI)
 manager = CycleSchemeManager(ai_client, "./data/cycles.pdf")
 transformer = CycleTransformer()
 
@@ -56,3 +53,4 @@ def execution_loop(gcode_path: str, finished_gcode: GCode):
 if __name__ == "__main__":
     load_dotenv()
     main()
+
