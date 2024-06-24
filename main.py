@@ -6,7 +6,6 @@ from ai.aiClientMethods import ClientType, getAiClient
 from cycle_types.Cycle import Cycle
 from cycle_types.CycleScheme import CycleScheme
 from cycle_types.GCode import GCode
-import json
 
 
 ai_client = getAiClient(ClientType.GEMINI)
