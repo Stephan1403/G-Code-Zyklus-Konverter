@@ -49,10 +49,7 @@ def execution_loop(gcode_path: str, finished_gcode: GCode):
 if __name__ == "__main__":
     content = "Return json only. I want the key to be test. And the value Hello World"
 
-    from classes.CycleInfoExtractor import CycleInfoExtractor
-
-    ci = CycleInfoExtractor("./data/cycles.pdf", ai_client)
-    a = ci.extract_cycle_info(430)
+    a = manager.get_scheme(430)
     print(a)
 
 
