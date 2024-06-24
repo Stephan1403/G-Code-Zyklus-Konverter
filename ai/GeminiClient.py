@@ -6,13 +6,11 @@ import google.generativeai as genai
 
 import os
 from dotenv import load_dotenv
-MODEL_VERSION = "gemini-1.5-flash-latest"
-MODEL_VERSION = "gemini-1.5-pro"
 load_dotenv()
 
 
 class GeminiClient(AiClient):
-    def __init__(self, api_key=os.getenv("API_KEY"), model=MODEL_VERSION):
+    def __init__(self, api_key=os.getenv("API_KEY"), model=os.getenv("GEMINI_MODEL_VERSION")):
         self.api_key = api_key
         genai.configure(api_key=api_key)
         self.model = genai.GenerativeModel(model)
