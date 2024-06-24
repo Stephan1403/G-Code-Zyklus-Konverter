@@ -68,6 +68,7 @@ class CycleInfoExtractor:
         prompt = PromptGenerator.generate(
             c_steps_instruction, c_steps_format, block_data
         )
+        print("Prompt: ", prompt)
 
         print("Requesting cycle steps from ai ...")
         dict_out: Dict = self.aiClient.dict_query(prompt=prompt)

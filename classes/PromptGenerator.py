@@ -71,7 +71,7 @@ class PromptPart:
             return data if data is not None else []
 
     def _append_tag(self):
-        open_tag = f"<{self.name.upper()}>B\nA"
+        open_tag = f"<{self.name.upper()}>\n"
         close_tag = f"\n</{self.name.upper()}>"
         self.value = open_tag + self.value + close_tag
 
