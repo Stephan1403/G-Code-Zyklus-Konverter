@@ -44,7 +44,7 @@
       "format": [
         "Gib mir eine String list im Json format zurück mit jedem Zyklusparameter und der Beschreibung.",
         "Ein List element ist immer Q-Parameter Name Beschreibung. ",
-        "Gebe nur das json aus und nichts anderes.",
+        "Gebe nur das json aus und nichts anderes."
       ],
       "instructions": [
         "Alle wichtigen Zyklusparameter sind unter Zyklusparameter, verwende nicht die Parameter die nicht unter Zyklusparameter gelistet sind",
