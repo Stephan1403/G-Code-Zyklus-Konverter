@@ -25,33 +25,32 @@
       "Entnehme die Zyklusdefinition aus folgenden Texten:"
     ],
     "get_cycle_steps": {
-      "format": [
-        "Gib mir im json format mit dem key \"description\" die Zyklusablaufbeschreibung zurück. ",
-        "description soll ein String sein. ",
-        "Wenn es keine Beschreibung gibt, dann soll description ein leerer String sein. ",
-        "Unter dem key \"steps\" sollen die tatsächlichen Zyklusabläufe in einer liste zurückgegeben werden. ",
-        "Die keys \"steps\" und \"description\" müssen vorhanden sein. ",
-        "Gebe nur das json aus und nicht anderes. "
-      ],
       "instructions": [
-        "Jeder Schritt beginnt immer mit einer Zahl und soll ein einziges Listenelement beziehungsweise String sein. ",
+        "Ich will die Beschreibung und die Schritte von einem Zyklus. ",
+        "Die Beschreibung steht, wenn vorhanden, unter Zyklusablauf. ",
+        "Jeder Schritt beginnt mit einer Zahl und soll ein einzelnes String Listenement sein. ",
         "Die Schritte sollen in der Reihenfolge zurückgegeben werden, wie sie im Zyklus vorkommen. ",
-        "Die Schritte sollen in der Liste \"steps\" zurückgegeben werden. ",
-        "Die Description soll die Beschreibung des Zyklusablaufs sein.",
-        "Die Description steht in der Regel vor den Schritten.",
-        "Entnehme die Informationen aus folgenden Text Blöcken:"
+        "Entnehme die Informatinen aus den gegebenen Daten"
+      ],
+      "format": [
+        "Gebe mir das Ergebnis als Json object zurück. ",
+        "Unter dem key \"description\" soll die Beschreibung des Zyklusablaufs stehen. ",
+        "Diese soll nur ein String sein und wenn nicht vorhanden ein leerer String. ",
+        "Unter dem key \"steps\" sollen die einzelnen Schritte des Zyklusablaufs in einer Liste stehen. ",
+        "Jedes Element der Liste soll ein String sein. ",
+        "Gebe nur das json zurück und nichts anderes"
       ]
     },
     "get_cycle_params": {
-      "format": [
-        "Gib mir eine String list im Json format zurück mit jedem Zyklusparameter und der Beschreibung.",
-        "Ein List element ist immer Q-Parameter Name Beschreibung. ",
-        "Gebe nur das json aus und nichts anderes."
-      ],
       "instructions": [
         "Alle wichtigen Zyklusparameter sind unter Zyklusparameter, verwende nicht die Parameter die nicht unter Zyklusparameter gelistet sind",
         "Die Parameter beginnen immer mit Q und dann einer Zahl, danach folgt der Name und dann die Beschreibung",
         "Entnehme die Informatinen aus folgenden Text Blöcken:"
+      ],
+      "format": [
+        "Gib mir eine String list im Json format zurück mit jedem Zyklusparameter und der Beschreibung.",
+        "Ein List element ist immer Q-Parameter Name Beschreibung. ",
+        "Gebe nur das json aus und nichts anderes."
       ]
     }
   }
