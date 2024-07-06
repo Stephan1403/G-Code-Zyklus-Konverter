@@ -1,23 +1,13 @@
 # G-Code Zyklus Konverter
 
-## Ordner Struktur
+## Abhängigkeiten
 
-```python
-G-Code-Zyklus-Converter
-|-- ai/
-|   |-- AiClient.py
-|   |--
-|-- classes/
-|   |-- Cycle.py
-|   |-- CycleExtractor.py   
-|   |-- CycleInfo
-|-- config/
-|   |-- ai_instructions.json
-|-- data/
-    |-- 
+- Python
+- Pip Packages: `pip install -r requirements.txt`
 
-```
+## AP Setup
 
-FileReader liest den Input, findet er einen Cycle
+Zum Verwenden des Programmes muss mindestens eine KI verbunden werden.
+Die einfachste Möglichkeit ist es einen Gemini API key zu generieren. [Link: https://aistudio.google.com/app/apikey]
 
-GCdo
+## Get Started
