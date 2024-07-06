@@ -5,9 +5,15 @@
 - Python
 - Pip Packages: `pip install -r requirements.txt`
 
-## AP Setup
+## AI Setup
 
 Zum Verwenden des Programmes muss mindestens eine KI verbunden werden.
-Die einfachste Möglichkeit ist es einen Gemini API key zu generieren. [Link: https://aistudio.google.com/app/apikey]
+
+Zum Beispiel:
+
+1. Gemini: [https://aistudio.google.com/app/apikey] (Kostenlos, Set by default)
+2. OpenAI:
+
+Die Daten können dann unter in eine .env datei. Ein Beispiel hierfür wäre die .env.example
 
 ## Get Started
