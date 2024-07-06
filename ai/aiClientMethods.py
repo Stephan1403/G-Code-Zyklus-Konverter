@@ -19,3 +19,5 @@ def getAiClient(client_type: ClientType = ClientType.GEMINI, **kwargs) -> AiClie
         ClientType.OPENAI: OpenaiClient,
     }
     return strategies[client_type](**kwargs)
+
+
