@@ -38,8 +38,7 @@ class CycleSchemeManager:
             saved_data = {}
         except json.JSONDecodeError:
             saved_data = {}
-        cycle_scheme: CycleScheme | None = saved_data.get(
-            str(cycle_number), None)
+        cycle_scheme: CycleScheme | None = saved_data.get(str(cycle_number), None)
         if cycle_scheme is not None:
             print("Use cycle scheme from storage.")
             return CycleScheme(cycle_scheme)
@@ -47,11 +46,9 @@ class CycleSchemeManager:
 
     def _generate_scheme_from_ai(self, cycle_number: int) -> CycleScheme:
         print(f"Generating scheme for cycle {cycle_number} ...")
-        cycleInfo: CycleInfo = self.cycleInfoExtractor.extract_cycle_info(
-            cycle_number)
+        cycleInfo: CycleInfo = self.cycleInfoExtractor.extract_cycle_info(cycle_number)
 
-        c_prompt_info = PromptPart(
-            name="Zyklus Informationen", data=[str(cycleInfo)])
+        c_prompt_info = PromptPart(name="Zyklus Informationen", data=[str(cycleInfo)])
         prompt = PromptGenerator.generate(
             scheme_instruction,
             scheme_example_input,
@@ -93,7 +90,7 @@ scheme_example_input = PromptPart(
     from_file=True,
 )
 
-scheme_example_output = PromptPart(
+scheme_example_output=PromptPart(
     name="Beispiel Output",
     path="config/example_data.json",
     data=["examples", 0, "output"],
