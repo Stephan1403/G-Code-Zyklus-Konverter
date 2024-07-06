@@ -31,8 +31,13 @@ class CycleSchemeManager:
 
     def _get_scheme_from_storage(self, cycle_number: int) -> CycleScheme | None:
         saved_data: dict = None
-        with open("./data/cycle_schemes.json", "r", encoding="utf-8") as f:
-            saved_data = json.load(f)
+        try:
+            with open("./data/cycle_schemes.json", "r", encoding="utf-8") as f:
+                saved_data = json.load(f)
+        except FileNotFoundError:
+            saved_data = {}
+        except json.JSONDecodeError:
+            saved_data = {}
         cycle_scheme: CycleScheme | None = saved_data.get(
             str(cycle_number), None)
         if cycle_scheme is not None:
@@ -62,8 +67,13 @@ class CycleSchemeManager:
 
     def _store_scheme(self, scheme: CycleScheme, cycle_number: int) -> None:
         saved_data: dict = None
-        with open("./data/cycle_schemes.json", "r", encoding="utf-8") as f:
-            saved_data = json.load(f)
+        try:
+            with open("./data/cycle_schemes.json", "r", encoding="utf-8") as f:
+                saved_data = json.load(f)
+        except FileNotFoundError:
+            saved_data = {}
+        except json.JSONDecodeError:
+            saved_data = {}
         saved_data[str(cycle_number)] = scheme.code
         with open("./data/cycle_schemes.json", "w", encoding="utf-8") as f:
             f.write(json.dumps(saved_data, indent=2))

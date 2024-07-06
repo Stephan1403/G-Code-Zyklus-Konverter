@@ -1,5 +1,6 @@
 import math # needed for eval
 import copy
+import re
 from cycle_types.Cycle import Cycle
 from cycle_types.CycleScheme import CycleScheme
 
@@ -98,10 +99,20 @@ class CycleTransformer:
 
     def _simple_eval(self, expression: str, params: dict) -> str:
         expression_result = None
-        try:
-            expression_result = eval(expression, globals(), params) # pylint: disable=eval-used
-        except Exception as e:
-            raise ValueError(f"Invalid expression. Expression: {expression}. Error: {e}") # pylint: disable=raise-missing-from
+        while True: # Used for retrying when a Q value is not found
+            try:
+                expression_result = eval(expression, globals(), params) # pylint: disable=eval-used
+                break
+            except Exception as e:
+                matches = re.findall(r'Q\d{3}', expression)
+                changed_values = False
+                for match in matches:
+                    if match not in params:
+                        params[match] = 0
+                        changed_values = True
+                if changed_values:
+                    continue
+                raise ValueError(f"Invalid expression. Expression: {expression}. Error: {e}") # pylint: disable=raise-missing-from
         return expression_result
 
     def _extract_bracketed_words(self, text: str):
