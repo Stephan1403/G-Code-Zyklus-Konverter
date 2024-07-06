@@ -6,7 +6,7 @@ import json
 
 class AiClient(ABC):
     @abstractmethod
-    def dict_query(self, **kwargs) -> Dict:
+    def dict_query(self, prompt: str, **kwargs) -> Dict:
         raise NotImplementedError()
 
     def get_dict_from_str_response(self, content: str) -> Dict:
