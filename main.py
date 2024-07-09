@@ -15,9 +15,10 @@ transformer = CycleTransformer()
 
 def main():
     path = input("Geben sie den Pfad zur G-Code Datei an:\n>> ")
+    if path == "":
+        path = "./test_gcode.txt"  # Testing fallback
 
     finished_gcode = GCode()
-    # test_path = "./test_gcode.txt"
     execution_loop(path, finished_gcode)
     save_gcode(finished_gcode)
 
