@@ -74,6 +74,16 @@ class GCodeReader:
         cycle.x = float(self.__get_cycle_pos(line, "X"))
         cycle.y = float(self.__get_cycle_pos(line, "Y"))
         cycle.z = float(self.__get_cycle_pos(line, "Z"))
+
+        initG0 = "G0 "
+        if cycle.x is not None:
+            initG0 += f"X{cycle.x} "
+        if cycle.y is not None:
+            initG0 += f"Y{cycle.y} "
+        if cycle.z is not None:
+            initG0 += f"Z{cycle.z} "
+        self.converted_lines.append(initG0)
+
         if self.__get_cycle_pos(line, "F") is not None:
             cycle.speed = self.__get_cycle_pos(line, "F")
         self.converted_lines.append(cycle)
